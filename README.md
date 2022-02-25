@@ -1,34 +1,24 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Domain Checker
 
-## Getting Started
+![](dc_promo.png)
 
-First, run the development server:
+## Overview
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+A fraud investigation tool used to check for invalid and disposable email domains.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- [Live Demo](https://dc3.vercel.app/)
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Features
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+The app was built with Node and JavaScript in Next.js using the official API provided by check-mail.org. The user can paste in the domains that they want to check, and the App will render a results table with additional columns that contain data of interest.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- Type - If the domain is considered disposable or not.
+- Block - The domain is not disposable, but is high risk and should be blocked anyway.
 
-## Learn More
+An export button was also included for larger queries. The user may want to download the entire results table as a CSV file for filtering and spreadsheet lookups.
+Tech Specs
 
-To learn more about Next.js, take a look at the following resources:
+I am using Next API routes as a server-side solution for the API endpoints. This takes additional load off the client with the additional bonus of keeping our API secrets hidden from the browser client.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+The API endpoint receives an array of email domains then does a web request for each of these items. We return a Promise.all() event once the individual requests have completed and merge the specific data fields into a new JSON object. This JSON object is sent back to the client as a HTTP "200" response.
+On the client side, we are waiting for this HTTP "200" response before the table of results can be updated. The form data is managed via React Hooks which will be updated upon a successful API request.

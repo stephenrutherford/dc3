@@ -17,7 +17,7 @@ export default class MyDocument extends Document {
             async
             defer
             data-website-id="c4c7658a-3d37-4622-a725-b10fd372850d"
-            src="https://umami-five-sigma.vercel.app/umami.js"
+            src="https://umami-five-sigma.vercel.app/blue.js"
             data-domains="dc3.vercel.app"
           ></script>
         </Head>
